@@ -1,6 +1,6 @@
-# Frontend Login Panel
+# Simple To-Do List App
 
-A simple and clean login form using HTML, CSS and JavaScript. This project is part of my learning path as a frontend developer.
+A simple to-do list web application built with HTML, CSS, and JavaScript. Allows adding, marking complete, and deleting tasks.
 
 ## 🛠️ Technologies
 - HTML5

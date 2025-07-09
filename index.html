@@ -2,66 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple To-Do List</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f3f4f6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .login-container {
-      background: white;
+      background: #f9fafb;
       padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
+      max-width: 500px;
+      margin: auto;
     }
-    h2 {
+    h1 {
       text-align: center;
-      color: #111827;
+      color: #333;
     }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      width: 100%;
+      padding: 10px;
+      border: none;
       background: #2563eb;
       color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
     }
-    button:hover {
-      background: #1d4ed8;
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      padding: 8px;
+      margin-top: 10px;
+      background: white;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    .delete-btn {
+      background: #ef4444;
+      border: none;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" placeholder="Username" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Sign In</button>
-    </form>
-  </div>
+
+  <h1>My To-Do List</h1>
+
+  <input type="text" id="taskInput" placeholder="Внеси нова задача..." />
+  <button id="addBtn">Додај</button>
+
+  <ul id="taskList"></ul>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('Login successful!');
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const taskList = document.getElementById('taskList');
+
+    addBtn.addEventListener('click', () => {
+      const taskText = taskInput.value.trim();
+      if (taskText === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      li.addEventListener('click', () => {
+        li.classList.toggle('completed');
+      });
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Бриши';
+      deleteBtn.classList.add('delete-btn');
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        taskList.removeChild(li);
+      });
+
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+      taskInput.value = '';
+    });
+
+    // Optional: Enter key adds task
+    taskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addBtn.click();
+      }
     });
   </script>
+
 </body>
 </html>
